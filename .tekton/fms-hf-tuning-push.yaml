@@ -21,7 +21,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{target_branch}}
+    value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{revision}}
   - name: dockerfile
     value: build/Dockerfile
   pipelineSpec:
@@ -125,6 +125,8 @@ spec:
             echo "${tag_name}"
 
     - name: print-tag-name
+      runAfter:
+      - get-tag-name
       params:
       - name: tag-name
         value: $(tasks.get-tag-name.results.tag-name)
@@ -134,6 +136,8 @@ spec:
           script: |
             echo "tag name: $(params.tag-name)"
     - name: init
+      runAfter:
+      - print-tag-name
       params:
       - name: image-url
         value: $(params.output-image)
