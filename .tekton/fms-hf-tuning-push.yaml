@@ -142,8 +142,6 @@ spec:
           script: |
             echo "tag name"
     - name: init
-      runAfter:
-      - print-tag-name
       params:
       - name: image-url
         value: $(params.output-image)
