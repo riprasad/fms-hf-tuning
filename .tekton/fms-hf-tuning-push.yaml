@@ -124,18 +124,8 @@ spec:
     #         echo -n "${tag_name}" > "$(results.tag-name.path)"
     #         echo "${tag_name}"
 
-    # - name: print-tag-name
-    #   runAfter:
-    #   - get-tag-name
-    #   params:
-    #   - name: tag-name
-    #     value: $(tasks.get-tag-name.results.tag-name)
-    #   taskSpec:
-    #     steps:
-    #     - image: registry.access.redhat.com/ubi9/ubi
-    #       script: |
-    #         echo "tag name: $(params.tag-name)"
-    - name: print
+    
+    - name: get-tag-name
       taskSpec:
         results:
         - name: tag-name
@@ -146,6 +136,17 @@ spec:
             tag_name=$(basename {{target_branch}})
             echo -n "${tag_name}"
             echo -n "${tag_name}" > "$(results.tag-name.path)"
+    - name: print-tag-name
+      runAfter:
+      - get-tag-name
+      taskSpec:
+        params:
+        - name: tag-name
+          value: $(tasks.get-tag-name.results.tag-name)
+        steps:
+        - image: registry.access.redhat.com/ubi9/ubi
+          script: |
+            echo "tag name: $(params.tag-name)"
 
     - name: init
       params:
