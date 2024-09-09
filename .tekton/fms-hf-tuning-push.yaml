@@ -24,6 +24,8 @@ spec:
     value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{revision}}
   - name: dockerfile
     value: build/Dockerfile
+  - name: tag-name
+    value: '/ref/tags/abc' 
   pipelineSpec:
     finally:
     - name: show-sbom
@@ -128,7 +130,6 @@ spec:
     - name: print-tag-name
       runAfter:
       - get-tag-name
-
       params:
       - name: tag-name
         value: $(tasks.get-tag-name.results.tag-name)
