@@ -111,6 +111,8 @@ spec:
     - description: ""
       name: CHAINS-GIT_COMMIT
       value: $(tasks.clone-repository.results.commit)
+    - name: tag-name
+      value: $(tasks.get-tag-name.results.tag-name)
     tasks:
 
     - name: get-tag-name
