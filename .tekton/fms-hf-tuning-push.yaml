@@ -24,6 +24,8 @@ spec:
     value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{revision}}
   - name: dockerfile
     value: build/Dockerfile
+  - name: tag-name
+    value: $(tasks.get-tag-name.results.tag-name)
   pipelineSpec:
     finally:
     - name: show-sbom
