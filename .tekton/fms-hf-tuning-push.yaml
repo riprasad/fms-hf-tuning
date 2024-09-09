@@ -25,7 +25,7 @@ spec:
   - name: dockerfile
     value: build/Dockerfile
   - name: tag-name
-    value: '/ref/tags/abc' 
+    value: '' 
   pipelineSpec:
     finally:
     - name: show-sbom
@@ -430,7 +430,7 @@ spec:
         value: $(tasks.build-image-index.results.IMAGE_URL)
       - name: ADDITIONAL_TAGS
         value: 
-          - '{{target_branch}}-{{revision}}'
+          - $(tasks.get-tag-name.results.tag-name)
       runAfter:
       - build-image-index
       taskRef:
