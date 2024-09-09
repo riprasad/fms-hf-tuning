@@ -97,7 +97,7 @@ spec:
       name: build-args-file
       type: string
     - name: tag-name
-      value: $(tasks.get-tag-name.results.tag-name)
+      description: Image tag name
     results:
     - description: ""
       name: IMAGE_URL
@@ -113,20 +113,6 @@ spec:
       value: $(tasks.clone-repository.results.commit)
     tasks:
 
-    # - name: get-tag-name
-    #   results:
-    #   - name: tag-name
-    #     description: Name of the git tag
-    #   taskSpec:
-    #     steps:
-    #     - image: registry.access.redhat.com/ubi9/ubi
-    #       script: |
-    #         echo {{target_branch}}
-    #         tag_name=$(basename {{target_branch}})
-    #         echo -n "${tag_name}" > "$(results.tag-name.path)"
-    #         echo "${tag_name}"
-
-    
     - name: get-tag-name
       taskSpec:
         results:
@@ -138,13 +124,14 @@ spec:
             tag_name=$(basename {{target_branch}})
             echo -n "${tag_name}"
             echo -n "${tag_name}" > "$(results.tag-name.path)"
+
     - name: print-tag-name
       runAfter:
       - get-tag-name
       taskSpec:
         params:
         - name: tag-name
-          description: image tag value will be passed by pipeline from build-image task result
+          value: $(tasks.get-tag-name.results.tag-name)
         steps:
         - image: registry.access.redhat.com/ubi9/ubi
           script: |
