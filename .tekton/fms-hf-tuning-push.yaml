@@ -140,7 +140,9 @@ spec:
         steps:
         - image: registry.access.redhat.com/ubi9/ubi
           script: |
-            echo {{target_branch}}
+            tag_name=$(basename {{target_branch}})
+            echo -n "${tag_name}"
+
     - name: init
       params:
       - name: image-url
