@@ -110,6 +110,29 @@ spec:
       name: CHAINS-GIT_COMMIT
       value: $(tasks.clone-repository.results.commit)
     tasks:
+
+    - name: get-tag-name
+      results:
+      - name: tag-name
+        description: Name of the git tag
+      taskSpec:
+        steps:
+        - image: registry.access.redhat.com/ubi9/ubi
+          script: |
+            echo {{target_branch}}
+            tag_name=$(basename {{target_branch}})
+            echo -n "${tag_name}" > "$(results.tag-name.path)"
+            echo "${tag_name}"
+
+    - name: print-tag-name
+      params:
+      - name: tag-name
+        value: $(tasks.get-tag-name.results.tag-name)
+      taskSpec:
+        steps:
+        - image: registry.access.redhat.com/ubi9/ubi
+          script: |
+            echo "tag name: $(params.tag-name)"
     - name: init
       params:
       - name: image-url
@@ -396,6 +419,9 @@ spec:
       params:
       - name: IMAGE
         value: $(tasks.build-image-index.results.IMAGE_URL)
+      - name: ADDITIONAL_TAGS
+        value: 
+          - '{{target_branch}}-{{revision}}'
       runAfter:
       - build-image-index
       taskRef:
