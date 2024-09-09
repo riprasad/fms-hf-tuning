@@ -21,7 +21,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{revision}}
+    value: quay.io/redhat-user-workloads/riprasad-2-tenant/fms-hf-tuning/fms-hf-tuning:{{target_branch}}
   - name: dockerfile
     value: build/Dockerfile
   pipelineSpec:
