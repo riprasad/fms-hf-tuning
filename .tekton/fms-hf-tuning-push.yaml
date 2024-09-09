@@ -109,9 +109,6 @@ spec:
     - description: ""
       name: CHAINS-GIT_COMMIT
       value: $(tasks.clone-repository.results.commit)
-    - name: tag-name
-      description: Name of the git tag
-      value: $(tasks.get-tag-name.results.tag-name)
     tasks:
 
     # - name: get-tag-name
@@ -139,10 +136,10 @@ spec:
     #       script: |
     #         echo "tag name: $(params.tag-name)"
     - name: print
-      results:
-      - name: tag-name
-        description: Name of the git tag
       taskSpec:
+        results:
+        - name: tag-name
+          description: Name of the git tag
         steps:
         - image: registry.access.redhat.com/ubi9/ubi
           script: |
