@@ -96,6 +96,8 @@ spec:
       description: Path to a file with build arguments for buildah, see https://www.mankier.com/1/buildah-build#--build-arg-file
       name: build-args-file
       type: string
+    - name: tag-name
+      value: $(tasks.get-tag-name.results.tag-name)
     results:
     - description: ""
       name: IMAGE_URL
@@ -142,7 +144,7 @@ spec:
       taskSpec:
         params:
         - name: tag-name
-          value: $(tasks.get-tag-name.results.tag-name)
+          description: image tag value will be passed by pipeline from build-image task result
         steps:
         - image: registry.access.redhat.com/ubi9/ubi
           script: |
